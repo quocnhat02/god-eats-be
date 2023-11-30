@@ -3,6 +3,7 @@ package com.lightcodese;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -16,8 +17,9 @@ public class Main {
     }
 
     @GetMapping("/")
-    public GreetingResponse greet(){
-        GreetingResponse response = new GreetingResponse("Hello World",
+    public GreetingResponse greet(@RequestParam(value = "name", required = false) String name){
+        String greetMessage = name == null || name.isBlank() ? "Hello" : "Hello " + name;
+        GreetingResponse response = new GreetingResponse(greetMessage,
                 List.of("Java", "Golang"),
                 new Person("Light", 22));
 
