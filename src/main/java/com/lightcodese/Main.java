@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Objects;
 
 @SpringBootApplication
@@ -16,38 +17,48 @@ public class Main {
 
     @GetMapping("/")
     public GreetingResponse greet(){
-        return new GreetingResponse("Hello");
+        GreetingResponse response = new GreetingResponse("Hello World",
+                List.of("Java", "Golang"),
+                new Person("Light", 22));
+
+        return response;
     }
 
-    class GreetingResponse {
-        private final String greet;
+    record Person(String name, int age) {}
 
-        GreetingResponse(String greet) {
-            this.greet = greet;
-        }
+    record GreetingResponse(String greet,
+                            List<String> favProgrammingLanguages,
+                            Person person) {}
 
-        @Override
-        public String toString() {
-            return "GreetingResponse{" +
-                    "greet='" + greet + '\'' +
-                    '}';
-        }
-
-        public String getGreet() {
-            return greet;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            GreetingResponse that = (GreetingResponse) o;
-            return Objects.equals(greet, that.greet);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(greet);
-        }
-    }
+//    class GreetingResponse {
+//        private final String greet;
+//
+//        GreetingResponse(String greet) {
+//            this.greet = greet;
+//        }
+//
+//        @Override
+//        public String toString() {
+//            return "GreetingResponse{" +
+//                    "greet='" + greet + '\'' +
+//                    '}';
+//        }
+//
+//        public String getGreet() {
+//            return greet;
+//        }
+//
+//        @Override
+//        public boolean equals(Object o) {
+//            if (this == o) return true;
+//            if (o == null || getClass() != o.getClass()) return false;
+//            GreetingResponse that = (GreetingResponse) o;
+//            return Objects.equals(greet, that.greet);
+//        }
+//
+//        @Override
+//        public int hashCode() {
+//            return Objects.hash(greet);
+//        }
+//    }
 }
