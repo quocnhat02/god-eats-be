@@ -6,17 +6,30 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @SpringBootApplication
 @RestController
 public class Main {
+
+    private static List<Customer> customers;
+
+    static {
+        customers = new ArrayList<>();
+        Customer nhat = new Customer(1,"Nhat","nhat@gmail.com",22);
+        customers.add(nhat);
+        Customer messi = new Customer(2,"Messi","messi@gmail.com",36);
+        customers.add(messi);
+    }
+
     public static void main(String[] args) {
+        System.out.println(customers);
         SpringApplication.run(Main.class, args);
     }
 
-    class Customer {
+    static class Customer {
         private Integer id;
         private String name;
         private String email;
