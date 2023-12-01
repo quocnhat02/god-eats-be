@@ -1,5 +1,6 @@
 package com.lightcodese.customer;
 
+import com.lightcodese.exception.ResourceNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,9 @@ public class CustomerService {
 
     public Customer getCustomerById(Integer id){
         return customerDao.selectCustomerById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Customer with id %s not found".formatted(id)));
+                .orElseThrow(() -> new ResourceNotFound(
+                        "Customer with id %s not found".formatted(id)
+                ));
     }
 
 }
