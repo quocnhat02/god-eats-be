@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: god_eats_postgres
+    environment:
+      POSTGRES_USER: god_eats
+      POSTGRES_PASSWORD: god_eats
+      POSTGRES_DB: god_eats
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    restart: always
+
+volumes:
+  postgres_data:
