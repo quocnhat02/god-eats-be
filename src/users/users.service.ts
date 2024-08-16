@@ -4,8 +4,6 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { LoginInput } from './dtos/login.dto';
-import * as Jwt from 'jsonwebtoken';
-import { ConfigService } from '@nestjs/config';
 import { JwtService } from 'src/jwt/jwt.service';
 
 @Injectable()
@@ -14,7 +12,6 @@ export class UsersService {
     @InjectRepository(User)
     private readonly users: Repository<User>,
 
-    private readonly config: ConfigService,
     private readonly jwtService: JwtService,
   ) {}
 
@@ -70,7 +67,7 @@ export class UsersService {
         };
       }
 
-      const token = Jwt.sign({ id: user.id }, this.config.get('SECRET_KEY'));
+      const token = this.jwtService.sign(user.id);
 
       return {
         ok: true,
