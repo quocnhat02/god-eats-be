@@ -11,7 +11,11 @@ export class UsersService {
     private readonly users: Repository<User>,
   ) {}
 
-  async createAccount({ email, password, role }: CreateAccountInput) {
+  async createAccount({
+    email,
+    password,
+    role,
+  }: CreateAccountInput): Promise<string | undefined> {
     try {
       const exists = await this.users.findOne({
         where: {
@@ -20,16 +24,12 @@ export class UsersService {
       });
 
       if (exists) {
-        return;
+        return 'There is a user with that email already';
       }
 
       await this.users.save(this.users.create({ email, password, role }));
-
-      return true;
     } catch (error) {
-      console.log(error);
-
-      return;
+      return 'Could not create account';
     }
   }
 }
