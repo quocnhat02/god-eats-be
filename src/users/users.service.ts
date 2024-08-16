@@ -6,6 +6,7 @@ import { Injectable } from '@nestjs/common';
 import { LoginInput } from './dtos/login.dto';
 import * as Jwt from 'jsonwebtoken';
 import { ConfigService } from '@nestjs/config';
+import { JwtService } from 'src/jwt/jwt.service';
 
 @Injectable()
 export class UsersService {
@@ -14,6 +15,7 @@ export class UsersService {
     private readonly users: Repository<User>,
 
     private readonly config: ConfigService,
+    private readonly jwtService: JwtService,
   ) {}
 
   // TODO: CREATE ACCOUNT SERVICE
@@ -72,7 +74,7 @@ export class UsersService {
 
       return {
         ok: true,
-        token: 'JWT TOKEN',
+        token,
       };
     } catch (error) {
       return { ok: false, error };
